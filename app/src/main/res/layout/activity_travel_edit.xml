@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".TravelEditActivity">
+
+    <TextView
+        android:id="@+id/lblCity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="Ciudad" />
+
+    <EditText
+        android:id="@+id/txtLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Ciudad"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/lblCountry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="País" />
+
+    <EditText
+        android:id="@+id/txtCountry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="País"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/lblYear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Año" />
+
+    <EditText
+        android:id="@+id/txtYear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Año"
+        android:inputType="number" />
+
+    <TextView
+        android:id="@+id/lblNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nota" />
+
+    <EditText
+        android:id="@+id/txtNote"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Nota"
+        android:inputType="textMultiLine" />
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:onClick="onClick"
+        android:text="Guardar" />
+</LinearLayout>
