@@ -17,7 +17,7 @@ class TravelEditActivity : AppCompatActivity() {
 
         if(view == btnSave) {
             // Mostramos el toast con los datos introducidos
-            val info = "${txtLocation.text} (${txtCountry.text}), año: ${txtYear.text}"
+            val info = "${txtCity.text} (${txtCountry.text}), año: ${txtYear.text}"
             Toast.makeText(this,info,Toast.LENGTH_LONG).show()
         }
     }
