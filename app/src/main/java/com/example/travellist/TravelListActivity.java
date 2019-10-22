@@ -27,7 +27,9 @@ import java.util.ArrayList;
  * 
  */
 public class TravelListActivity extends AppCompatActivity implements ListView.OnItemClickListener {
-	
+
+	private static final int RC_NEW = 1;
+
 	private TravelAdapter adapter;
 
 	private class TravelAdapter extends ArrayAdapter<TravelInfo>{
@@ -118,26 +120,6 @@ public class TravelListActivity extends AppCompatActivity implements ListView.On
         return travels;
     }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_travel_list,menu);
-		return super.onCreateOptionsMenu(menu);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-
-		if(item.getTitle().equals("Nuevo")) {
-			// Lanzamos la actividad para añadir un nuevo viaje
-			Intent intent = new Intent(this, TravelEditActivity.class);
-			startActivityForResult(intent,1);
-
-		}
-
-		return super.onOptionsItemSelected(item);
-	}
-
-
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 		// Obtenemos los datos del viaje seleccionado
@@ -160,20 +142,46 @@ public class TravelListActivity extends AppCompatActivity implements ListView.On
 	}
 
 	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.activity_travel_list,menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		if(item.getTitle().equals("Nuevo")) {
+			// Lanzamos la actividad para añadir un nuevo viaje
+			Intent intent = new Intent(this, TravelEditActivity.class);
+			startActivityForResult(intent,RC_NEW);
+
+		}
+
+		return super.onOptionsItemSelected(item);
+	}
+
+
+	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 
-		if(requestCode == 1) {
-			if(resultCode == Activity.RESULT_OK) {
-				TravelInfo info = new TravelInfo(
-						data.getStringExtra("City"),
-						data.getStringExtra("Country"),
-						data.getIntExtra("Year",0),
-						data.getStringExtra("Note")
-				);
-				adapter.travels.add(info);
-				adapter.notifyDataSetChanged();
-			}
+
+		switch (requestCode) {
+			case (RC_NEW):
+				if (resultCode == Activity.RESULT_OK) {
+					TravelInfo info = new TravelInfo(
+							data.getStringExtra("City"),
+							data.getStringExtra("Country"),
+							data.getIntExtra("Year", 0),
+							data.getStringExtra("Note")
+					);
+					adapter.travels.add(info);
+					adapter.notifyDataSetChanged();
+				}
+				break;
+			default:
+				break;
 		}
+
 	}
 }
