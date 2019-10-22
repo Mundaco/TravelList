@@ -16,10 +16,11 @@ class TravelEditActivity : AppCompatActivity() {
         setContentView(R.layout.activity_travel_edit)
 
         if(intent.hasExtra("Position")) {
-            txtCity.setText(intent.getStringExtra("City"))
-            txtCountry.setText(intent.getStringExtra("Country"))
-            txtYear.setText("${intent.getIntExtra("Year",1900)}")
-            txtNote.setText(intent.getStringExtra("Note"))
+            val info= TravelInfo.fromBundle(intent.getBundleExtra("Info"))
+            txtCity.setText(info.city)
+            txtCountry.setText(info.country)
+            txtYear.setText("${info.year}")
+            txtNote.setText(info.note)
         }
     }
 
@@ -28,11 +29,14 @@ class TravelEditActivity : AppCompatActivity() {
         if(view == btnSave) {
 
             val data = Intent()
-            data.putExtra("Position",intent.getIntExtra("Position",-1))
-            data.putExtra("City", "${txtCity.text}")
-            data.putExtra("Country", "${txtCountry.text}")
-            data.putExtra("Year", try {"${txtYear.text}".toInt()} catch (e: Exception) {1900} )
-            data.putExtra("Note", "${txtNote.text}")
+            data.putExtra("Position", intent.getIntExtra("Position", -1))
+            val info = TravelInfo(
+                    "${txtCity.text}",
+                    "${txtCountry.text}",
+                     try { "${txtYear.text}".toInt() } catch (e: Exception) { 1900 },
+                    "${txtNote.text}"
+            )
+            data.putExtra("Info", info.toBundle())
 
             setResult(Activity.RESULT_OK,data)
             finish()

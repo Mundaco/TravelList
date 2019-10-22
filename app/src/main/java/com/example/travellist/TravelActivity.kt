@@ -11,9 +11,10 @@ class TravelActivity : AppCompatActivity() {
         setContentView(R.layout.activity_travel)
 
         // Mostramos los datos pasados en el intent en cada control
-        txtLocation.text  = "${intent.extras?.getString("City")} (${intent.extras.getString("Country")})"
-        txtYear.text  = """Year: ${intent.extras?.getString("Year")}"""
-        txtNote.text  = intent.extras?.getString("Note")
+        val info = TravelInfo.fromBundle(intent.getBundleExtra("Info"))
+        txtLocation.text  = "${info.city} (${info.country})"
+        txtYear.text  = "Year: ${info.year}"
+        txtNote.text  = info.note
     }
 
 

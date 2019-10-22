@@ -133,10 +133,7 @@ public class TravelListActivity extends AppCompatActivity implements ListView.On
 
 		// Añadimos al intent los datos del viaje
 		assert info != null;
-		intent.putExtra("City", info.getCity());
-		intent.putExtra("Country", info.getCountry());
-		intent.putExtra("Year", String.valueOf(info.getYear()));
-		intent.putExtra("Note", info.getNote());
+		intent.putExtra("Info", info.toBundle());
 
 		// Lanzamos la nueva actividad
 		startActivity(intent);
@@ -154,10 +151,7 @@ public class TravelListActivity extends AppCompatActivity implements ListView.On
 		// Añadimos al intent los datos del viaje
 		assert info != null;
 		intent.putExtra("Position",position);
-		intent.putExtra("City", info.getCity());
-		intent.putExtra("Country", info.getCountry());
-		intent.putExtra("Year", info.getYear());
-		intent.putExtra("Note", info.getNote());
+		intent.putExtra("Info",info.toBundle());
 		startActivityForResult(intent,RC_EDIT);
 
 		return false;
@@ -190,12 +184,7 @@ public class TravelListActivity extends AppCompatActivity implements ListView.On
 		switch (requestCode) {
 			case (RC_NEW):
 				if (resultCode == Activity.RESULT_OK) {
-					adapter.travels.add(new TravelInfo(
-							data.getStringExtra("City"),
-							data.getStringExtra("Country"),
-							data.getIntExtra("Year", 0),
-							data.getStringExtra("Note")
-					));
+					adapter.travels.add(TravelInfo.fromBundle(data.getBundleExtra("Info")));
 					adapter.notifyDataSetChanged();
 				}
 				break;
@@ -204,14 +193,7 @@ public class TravelListActivity extends AppCompatActivity implements ListView.On
 
 					int position = data.getIntExtra("Position",-1);
 					if(position >= 0) {
-
-						adapter.travels.set(position, new TravelInfo(
-								data.getStringExtra("City"),
-								data.getStringExtra("Country"),
-								data.getIntExtra("Year",1900),
-								data.getStringExtra("Note")
-						));
-
+						adapter.travels.set(position, TravelInfo.fromBundle(data.getBundleExtra("Info")));
 						adapter.notifyDataSetChanged();
 					}
 				}
