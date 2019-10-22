@@ -74,9 +74,10 @@ public class TravelListActivity extends AppCompatActivity implements ListView.On
 			
 			//Rellenamos la vista con los datos
 			TravelInfo info = travels.get(position);
-			// TODO: String templates for string literals
-			holder.text1.setText(info.getCity() + " (" + info.getCountry() + ")");
-			holder.text2.setText("Year: " + (info.getYear() > 0 ? info.getYear() : "n/a"));
+			holder.text1.setText(getString(R.string.location,info.getCity(), info.getCountry()));
+			holder.text2.setText((info.getYear() > 0 ?
+					getString(R.string.year, String.valueOf(info.getYear())) :
+					getString(R.string.year_na)));
 
 			return view;
 		}
