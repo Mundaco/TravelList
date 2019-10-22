@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".TravelEditActivity">
+    tools:context=".TravelEditActivity"
+    tools:menu="@menu/activity_travel_edit">
 
     <TextView
         android:id="@+id/lblCity"
@@ -60,17 +61,9 @@
         android:id="@+id/txtNote"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
         android:ems="10"
         android:gravity="start|top"
         android:hint="Nota"
         android:inputType="textMultiLine" />
 
-    <Button
-        android:id="@+id/btnSave"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:onClick="onClick"
-        android:text="Guardar" />
 </LinearLayout>
