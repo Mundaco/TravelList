@@ -26,11 +26,13 @@ import java.util.ArrayList;
  * forma correcta en la vista.
  * 
  */
-public class TravelListActivity extends AppCompatActivity implements ListView.OnItemClickListener {
+public class TravelListActivity extends AppCompatActivity implements ListView.OnItemClickListener, ListView.OnItemLongClickListener {
 
 	private static final int RC_NEW = 1;
+	private static final int RC_EDIT = 2;
 
 	private TravelAdapter adapter;
+
 
 	private class TravelAdapter extends ArrayAdapter<TravelInfo>{
 		
@@ -95,6 +97,7 @@ public class TravelListActivity extends AppCompatActivity implements ListView.On
         ListView list = findViewById(R.id.lstInfo);
         list.setAdapter(adapter);
         list.setOnItemClickListener(this);
+        list.setOnItemLongClickListener(this);
 
     }
 
@@ -138,7 +141,26 @@ public class TravelListActivity extends AppCompatActivity implements ListView.On
 		// Lanzamos la nueva actividad
 		startActivity(intent);
 
+	}
 
+	public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+		// Obtenemos los datos del viaje seleccionado
+		TravelInfo info = adapter.getItem(position);
+
+		// Creamos el intent para mostrar la nueva actividad
+		Intent intent = new Intent(this, TravelEditActivity.class);
+
+		// Añadimos al intent los datos del viaje
+		assert info != null;
+		intent.putExtra("Position",position);
+		intent.putExtra("City", info.getCity());
+		intent.putExtra("Country", info.getCountry());
+		intent.putExtra("Year", info.getYear());
+		intent.putExtra("Note", info.getNote());
+		startActivityForResult(intent,RC_EDIT);
+
+		return false;
 	}
 
 	@Override
@@ -168,14 +190,29 @@ public class TravelListActivity extends AppCompatActivity implements ListView.On
 		switch (requestCode) {
 			case (RC_NEW):
 				if (resultCode == Activity.RESULT_OK) {
-					TravelInfo info = new TravelInfo(
+					adapter.travels.add(new TravelInfo(
 							data.getStringExtra("City"),
 							data.getStringExtra("Country"),
 							data.getIntExtra("Year", 0),
-							data.getStringExtra("Note")
-					);
-					adapter.travels.add(info);
+							data.getStringExtra("Note"));
 					adapter.notifyDataSetChanged();
+				}
+				break;
+			case (RC_EDIT):
+				if (resultCode == Activity.RESULT_OK) {
+
+					int position = data.getIntExtra("Position",-1);
+					if(position >= 0) {
+
+						adapter.travels.set(position, new TravelInfo(
+								data.getStringExtra("City"),
+								data.getStringExtra("Country"),
+								data.getIntExtra("Year",1900),
+								data.getStringExtra("Note")
+						));
+
+						adapter.notifyDataSetChanged();
+					}
 				}
 				break;
 			default:

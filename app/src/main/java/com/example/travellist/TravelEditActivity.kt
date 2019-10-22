@@ -14,19 +14,27 @@ class TravelEditActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_travel_edit)
+
+        if(intent.hasExtra("Position")) {
+            txtCity.setText(intent.getStringExtra("City"))
+            txtCountry.setText(intent.getStringExtra("Country"))
+            txtYear.setText("${intent.getIntExtra("Year",1900)}")
+            txtNote.setText(intent.getStringExtra("Note"))
+        }
     }
 
     fun onClick(view: View?) {
 
         if(view == btnSave) {
 
-            val intent = Intent()
-            intent.putExtra("City", "${txtCity.text}")
-            intent.putExtra("Country", "${txtCountry.text}")
-            intent.putExtra("Year", try {"${txtYear.text}".toInt()} catch (e: Exception) {0} )
-            intent.putExtra("Note", "${txtNote.text}")
+            val data = Intent()
+            data.putExtra("Position",intent.getIntExtra("Position",-1))
+            data.putExtra("City", "${txtCity.text}")
+            data.putExtra("Country", "${txtCountry.text}")
+            data.putExtra("Year", try {"${txtYear.text}".toInt()} catch (e: Exception) {1900} )
+            data.putExtra("Note", "${txtNote.text}")
 
-            setResult(Activity.RESULT_OK,intent)
+            setResult(Activity.RESULT_OK,data)
             finish()
         }
     }
