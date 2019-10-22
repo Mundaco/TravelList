@@ -165,7 +165,6 @@ public class TravelListActivity extends AppCompatActivity implements ListView.On
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 
-
 		switch (requestCode) {
 			case (RC_NEW):
 				if (resultCode == Activity.RESULT_OK) {

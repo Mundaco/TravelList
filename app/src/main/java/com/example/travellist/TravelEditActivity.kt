@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import kotlinx.android.synthetic.main.activity_travel_edit.*
 
+
+
 class TravelEditActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
