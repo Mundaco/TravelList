@@ -194,7 +194,8 @@ public class TravelListActivity extends AppCompatActivity implements ListView.On
 							data.getStringExtra("City"),
 							data.getStringExtra("Country"),
 							data.getIntExtra("Year", 0),
-							data.getStringExtra("Note"));
+							data.getStringExtra("Note")
+					));
 					adapter.notifyDataSetChanged();
 				}
 				break;
