@@ -153,7 +153,7 @@ public class TravelListActivity extends ListActivity {
 				TravelInfo info = new TravelInfo(
 						data.getStringExtra("City"),
 						data.getStringExtra("Country"),
-						Integer.valueOf(data.getStringExtra("Year")),
+						data.getIntExtra("Year",0),
 						data.getStringExtra("Note")
 				);
 				adapter.travels.add(info);

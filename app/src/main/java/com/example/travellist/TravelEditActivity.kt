@@ -19,10 +19,10 @@ class TravelEditActivity : AppCompatActivity() {
         if(view == btnSave) {
 
             val intent = Intent()
-            intent.putExtra("City", txtCity.text.toString())
-            intent.putExtra("Country", txtCountry.text.toString())
-            intent.putExtra("Year", txtYear.text.toString())
-            intent.putExtra("Note", txtNote.text.toString())
+            intent.putExtra("City", "${txtCity.text}")
+            intent.putExtra("Country", "${txtCountry.text}")
+            intent.putExtra("Year", try {"${txtYear.text}".toInt()} catch (e: Exception) {0} )
+            intent.putExtra("Note", "${txtNote.text}")
 
             setResult(Activity.RESULT_OK,intent)
             finish()
