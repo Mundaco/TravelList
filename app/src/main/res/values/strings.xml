@@ -7,7 +7,7 @@
     <string name="menu_edit_save">Guardar</string>
 
     <string name="location">%1$s (%2$s)</string>
-    <string name="year1">Year: %1$s</string>
+    <string name="year">Year: %1$s</string>
     <string name="year_na">n/a</string>
 
 </resources>
