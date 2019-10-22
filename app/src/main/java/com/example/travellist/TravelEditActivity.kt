@@ -1,9 +1,10 @@
 package com.example.travellist
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_travel_edit.*
 
 class TravelEditActivity : AppCompatActivity() {
@@ -16,9 +17,15 @@ class TravelEditActivity : AppCompatActivity() {
     fun onClick(view: View?) {
 
         if(view == btnSave) {
-            // Mostramos el toast con los datos introducidos
-            val info = "${txtLocation.text} (${txtCountry.text}), año: ${txtYear.text}"
-            Toast.makeText(this,info,Toast.LENGTH_LONG).show()
+
+            val intent = Intent()
+            intent.putExtra("City", txtCity.text.toString())
+            intent.putExtra("Country", txtCountry.text.toString())
+            intent.putExtra("Year", txtYear.text.toString())
+            intent.putExtra("Note", txtNote.text.toString())
+
+            setResult(Activity.RESULT_OK,intent)
+            finish()
         }
     }
 }

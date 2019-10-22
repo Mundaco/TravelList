@@ -1,5 +1,6 @@
 package com.example.travellist;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -138,7 +139,26 @@ public class TravelListActivity extends ListActivity {
 		if(view == findViewById(R.id.btnAdd)) {
 			// Lanzamos la actividad para añadir un nuevo viaje
 			Intent intent = new Intent(this, TravelEditActivity.class);
-			startActivity(intent);
+			startActivityForResult(intent,1);
+
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if(requestCode == 1) {
+			if(resultCode == Activity.RESULT_OK) {
+				TravelInfo info = new TravelInfo(
+						data.getStringExtra("City"),
+						data.getStringExtra("Country"),
+						Integer.valueOf(data.getStringExtra("Year")),
+						data.getStringExtra("Note")
+				);
+				adapter.travels.add(info);
+				adapter.notifyDataSetChanged();
+			}
 		}
 	}
 }
