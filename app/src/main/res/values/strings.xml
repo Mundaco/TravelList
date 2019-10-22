@@ -1,8 +1,9 @@
 <resources>
 
     <string name="app_name">Travel List</string>
-    <string name="title_activity_travel_list">TravelListActivity</string>
+    <string name="title_activity_travel_list">@string/app_name</string>
 
     <string name="year">Year:</string>
+    <string name="menu_new_travel">Nuevo</string>
 
 </resources>

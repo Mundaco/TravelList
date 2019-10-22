@@ -1,13 +1,16 @@
 package com.example.travellist;
 
 import android.app.Activity;
-import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -23,7 +26,7 @@ import java.util.ArrayList;
  * forma correcta en la vista.
  * 
  */
-public class TravelListActivity extends ListActivity {
+public class TravelListActivity extends AppCompatActivity implements ListView.OnItemClickListener {
 	
 	private TravelAdapter adapter;
 
@@ -82,15 +85,18 @@ public class TravelListActivity extends ListActivity {
         super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_travel_list);
 
-        //Generamos los datos
+		//Generamos los datos
         ArrayList<TravelInfo> values = getData();
         
         //Creamos el adapter y lo asociamos a la activity
         adapter = new TravelAdapter(this, values);
-        
-        setListAdapter(adapter);
+        ListView list = findViewById(R.id.lstInfo);
+        list.setAdapter(adapter);
+        list.setOnItemClickListener(this);
 
     }
+
+
     
     //Generamos datos a mostrar
     //En una aplicacion funcional se tomarian de base de datos o algun otro medio
@@ -113,7 +119,26 @@ public class TravelListActivity extends ListActivity {
     }
 
 	@Override
-	protected void onListItemClick(ListView l, View v, int position, long id) {
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.activity_travel_list,menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		if(item.getTitle().equals("Nuevo")) {
+			// Lanzamos la actividad para añadir un nuevo viaje
+			Intent intent = new Intent(this, TravelEditActivity.class);
+			startActivityForResult(intent,1);
+
+		}
+
+		return super.onOptionsItemSelected(item);
+	}
+
+
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 		// Obtenemos los datos del viaje seleccionado
 		TravelInfo info = adapter.getItem(position);
@@ -131,17 +156,7 @@ public class TravelListActivity extends ListActivity {
 		// Lanzamos la nueva actividad
 		startActivity(intent);
 
-		super.onListItemClick(l, v, position, id);
-	}
 
-	public void onClick(View view) {
-
-		if(view == findViewById(R.id.btnAdd)) {
-			// Lanzamos la actividad para añadir un nuevo viaje
-			Intent intent = new Intent(this, TravelEditActivity.class);
-			startActivityForResult(intent,1);
-
-		}
 	}
 
 	@Override
