@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,49 +12,49 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:text="Ciudad" />
+        android:text="@string/City" />
 
     <EditText
         android:id="@+id/txtCity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Ciudad"
+        android:hint="@string/City"
         android:inputType="textPersonName" />
 
     <TextView
         android:id="@+id/lblCountry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="País" />
+        android:text="@string/Country" />
 
     <EditText
         android:id="@+id/txtCountry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="País"
+        android:hint="@string/Country"
         android:inputType="textPersonName" />
 
     <TextView
         android:id="@+id/lblYear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Año" />
+        android:text="@string/Year" />
 
     <EditText
         android:id="@+id/txtYear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Año"
+        android:hint="@string/Year"
         android:inputType="number" />
 
     <TextView
         android:id="@+id/lblNote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nota" />
+        android:text="@string/Note" />
 
     <EditText
         android:id="@+id/txtNote"
@@ -63,7 +62,7 @@
         android:layout_height="match_parent"
         android:ems="10"
         android:gravity="start|top"
-        android:hint="Nota"
+        android:hint="@string/Note"
         android:inputType="textMultiLine" />
 
 </LinearLayout>
