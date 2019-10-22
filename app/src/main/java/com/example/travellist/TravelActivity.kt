@@ -12,8 +12,9 @@ class TravelActivity : AppCompatActivity() {
 
         // Mostramos los datos pasados en el intent en cada control
         val info = TravelInfo.fromBundle(intent.getBundleExtra("Info"))
+        // TODO: String templates for string literals
         txtLocation.text  = "${info.city} (${info.country})"
-        txtYear.text  = "Year: ${info.year}"
+        txtYear.text  = "Year: " + if(info.year > 0) info.year else "n/a"
         txtNote.text  = info.note
     }
 

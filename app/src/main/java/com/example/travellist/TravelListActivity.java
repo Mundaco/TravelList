@@ -16,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 /**
@@ -40,15 +42,16 @@ public class TravelListActivity extends AppCompatActivity implements ListView.On
 		private ArrayList<TravelInfo> travels;
 		private static final int RESOURCE = android.R.layout.simple_list_item_2;
 
-		public TravelAdapter(Context context, ArrayList<TravelInfo> travels) {
+		TravelAdapter(Context context, ArrayList<TravelInfo> travels) {
 			super(context, RESOURCE, travels);
 			
 			this.context = context;
 			this.travels = travels;
 		}
 
+		@NotNull
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
+		public View getView(int position, View convertView, @NotNull ViewGroup parent) {
 			
 			LinearLayout view;
 			ViewHolder holder;
@@ -60,8 +63,8 @@ public class TravelListActivity extends AppCompatActivity implements ListView.On
 				inflater.inflate(RESOURCE, view, true);
 				
 				holder = new ViewHolder();
-				holder.text1 = (TextView) view.findViewById(android.R.id.text1);
-				holder.text2 = (TextView) view.findViewById(android.R.id.text2);
+				holder.text1 = view.findViewById(android.R.id.text1);
+				holder.text2 = view.findViewById(android.R.id.text2);
 				view.setTag(holder);
 				
 			} else {
@@ -71,9 +74,10 @@ public class TravelListActivity extends AppCompatActivity implements ListView.On
 			
 			//Rellenamos la vista con los datos
 			TravelInfo info = travels.get(position);
+			// TODO: String templates for string literals
 			holder.text1.setText(info.getCity() + " (" + info.getCountry() + ")");
-			holder.text2.setText(getResources().getString(R.string.year) + " " + info.getYear());
-			
+			holder.text2.setText(getResources().getString(R.string.year) + " " + (info.getYear() > 0 ? info.getYear() : "n/a"));
+
 			return view;
 		}
 		
@@ -89,15 +93,16 @@ public class TravelListActivity extends AppCompatActivity implements ListView.On
         super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_travel_list);
 
+		ListView list = findViewById(R.id.lstInfo);
+		list.setOnItemClickListener(this);
+		list.setOnItemLongClickListener(this);
+
 		//Generamos los datos
 		ArrayList<TravelInfo> values = getData();
 
-        //Creamos el adapter y lo asociamos a la activity
+        //Creamos el adapter y lo asociamos a la lista de la actividad
         adapter = new TravelAdapter(this, values);
-        ListView list = findViewById(R.id.lstInfo);
         list.setAdapter(adapter);
-        list.setOnItemClickListener(this);
-        list.setOnItemLongClickListener(this);
     }
 
 	//Generamos datos a mostrar
@@ -181,7 +186,7 @@ public class TravelListActivity extends AppCompatActivity implements ListView.On
 		switch (requestCode) {
 			case (RC_NEW):
 				if (resultCode == Activity.RESULT_OK) {
-					adapter.travels.add(TravelInfo.fromBundle(data.getBundleExtra("Info")));
+					adapter.travels.add(TravelInfo.Companion.fromBundle(data.getBundleExtra("Info")));
 					adapter.notifyDataSetChanged();
 				}
 				break;
@@ -190,7 +195,7 @@ public class TravelListActivity extends AppCompatActivity implements ListView.On
 
 					int position = data.getIntExtra("Position",-1);
 					if(position >= 0) {
-						adapter.travels.set(position, TravelInfo.fromBundle(data.getBundleExtra("Info")));
+						adapter.travels.set(position, TravelInfo.Companion.fromBundle(data.getBundleExtra("Info")));
 						adapter.notifyDataSetChanged();
 					}
 				}

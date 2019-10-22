@@ -40,7 +40,7 @@ class TravelEditActivity : AppCompatActivity() {
             val info = TravelInfo(
                     "${txtCity.text}",
                     "${txtCountry.text}",
-                    try { "${txtYear.text}".toInt() } catch (e: Exception) { 1900 },
+                    try { "${txtYear.text}".toInt() } catch (e: Exception) { 0 },
                     "${txtNote.text}"
             )
             data.putExtra("Info", info.toBundle())
