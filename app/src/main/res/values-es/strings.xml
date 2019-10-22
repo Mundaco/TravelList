@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Travel List</string>
+    <string name="City">Ciudad</string>
+    <string name="Year">Año</string>
+    <string name="Note">Nota</string>
+    <string name="Country">País</string>
+    <string name="menu_edit_save">Guardar</string>
+    <string name="menu_new_travel">Nuevo</string>
+    <string name="year_string_na">n/d</string>
+    <string name="year_string">Año: %1$s</string>
+</resources>

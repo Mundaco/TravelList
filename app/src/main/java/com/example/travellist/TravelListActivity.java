@@ -169,7 +169,7 @@ public class TravelListActivity extends AppCompatActivity implements ListView.On
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
-		if(item.getTitle().equals("Nuevo")) {
+		if(item.getItemId() == R.id.menu_new_travel) {
 			// Lanzamos la actividad para añadir un nuevo viaje
 			Intent intent = new Intent(this, TravelEditActivity.class);
 			startActivityForResult(intent,RC_NEW);

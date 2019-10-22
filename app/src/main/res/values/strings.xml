@@ -1,18 +1,18 @@
 <resources>
 
     <string name="app_name">Travel List</string>
-    <string name="title_activity_travel_list">@string/app_name</string>
+    <string name="title_activity_travel_list" translatable="false">@string/app_name</string>
 
-    <string name="menu_new_travel">Nuevo</string>
-    <string name="menu_edit_save">Guardar</string>
+    <string name="menu_new_travel">New</string>
+    <string name="menu_edit_save">Save</string>
 
-    <string name="location_string">%1$s (%2$s)</string>
-    <string name="year_string">Year: %1$s</string>
+    <string name="location_string" translatable="false">%1$s (%2$s)</string>
+    <string name="year_string">Year: %1$s"</string>
     <string name="year_string_na">n/a</string>
 
-    <string name="City">Ciudad</string>
-    <string name="Country">País</string>
-    <string name="Year">Año</string>
-    <string name="Note">Nota</string>
+    <string name="City">City</string>
+    <string name="Country">Country</string>
+    <string name="Year">Year</string>
+    <string name="Note">Note</string>
 
 </resources>
