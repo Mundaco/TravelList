@@ -13,6 +13,7 @@
         <activity
             android:name=".TravelListActivity"
             android:label="@string/title_activity_travel_list"
+            android:launchMode="singleTop"
             android:screenOrientation="sensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

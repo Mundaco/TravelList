@@ -90,20 +90,17 @@ public class TravelListActivity extends AppCompatActivity implements ListView.On
 		setContentView(R.layout.activity_travel_list);
 
 		//Generamos los datos
-        ArrayList<TravelInfo> values = getData();
-        
+		ArrayList<TravelInfo> values = getData();
+
         //Creamos el adapter y lo asociamos a la activity
         adapter = new TravelAdapter(this, values);
         ListView list = findViewById(R.id.lstInfo);
         list.setAdapter(adapter);
         list.setOnItemClickListener(this);
         list.setOnItemLongClickListener(this);
-
     }
 
-
-    
-    //Generamos datos a mostrar
+	//Generamos datos a mostrar
     //En una aplicacion funcional se tomarian de base de datos o algun otro medio
     private ArrayList<TravelInfo> getData(){
     	ArrayList<TravelInfo> travels = new ArrayList<TravelInfo>();
