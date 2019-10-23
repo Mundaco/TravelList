@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.*
 import android.widget.*
@@ -176,8 +177,24 @@ class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
 
     private fun deleteItem(position: Int) {
 
-        adapter?.travels?.removeAt(position)
-        adapter?.notifyDataSetChanged()
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(getString(R.string.Delete))
+        builder.setMessage(getString(R.string.delete_item_question))
+        builder.setPositiveButton(getString(R.string.Yes)){ _, _ ->
+
+            // Eliminamos el elemento
+            adapter?.travels?.removeAt(position)
+            adapter?.notifyDataSetChanged()
+
+            Toast.makeText(this,getString(R.string.delete_item_confirmation),Toast.LENGTH_SHORT).show()
+        }
+
+        builder.setNegativeButton(getString(R.string.No)){ _, _ ->
+            Toast.makeText(this,getString(R.string.delete_item_cancelled),Toast.LENGTH_SHORT).show()
+        }
+
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

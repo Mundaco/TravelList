@@ -10,4 +10,9 @@
     <string name="NA">n/d</string>
     <string name="Edit">Editar</string>
     <string name="Delete">Eliminar</string>
+    <string name="No">No</string>
+    <string name="Yes">Yes</string>
+    <string name="delete_item_cancelled">Acción cancelada.</string>
+    <string name="delete_item_confirmation">Elemento eliminado.</string>
+    <string name="delete_item_question">¿Estás seguro de que quieres eliminar este elemento?</string>
 </resources>
