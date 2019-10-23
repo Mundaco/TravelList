@@ -1,6 +1,8 @@
 package com.example.travellist
 
 import android.os.Bundle
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
 /**
  * Esta clase contiene la informacion de un viaje. Los datos que almacena son la ciudad, el pais,
@@ -8,7 +10,9 @@ import android.os.Bundle
  *
  *
  */
-data class TravelInfo(var city: String?, var country: String?, var year: Int, var note: String? = null) {
+
+@Parcelize
+data class TravelInfo(var city: String?, var country: String?, var year: Int, var note: String? = null) : Parcelable {
 
     constructor(info: Bundle) : this(
             info.getString(KEY_CITY),
@@ -33,8 +37,6 @@ data class TravelInfo(var city: String?, var country: String?, var year: Int, va
         const val KEY_COUNTRY = "Country"
         const val KEY_YEAR = "Year"
         const val KEY_NOTE = "Note"
-
-
     }
 }
 

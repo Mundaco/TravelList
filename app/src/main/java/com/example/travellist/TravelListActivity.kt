@@ -25,6 +25,7 @@ class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
 
     companion object {
 
+        private const val KEY_DATA = "Data"
         private const val RC_NEW = 1
         private const val RC_EDIT = 2
         private const val ADAPTER_RESOURCE = android.R.layout.simple_list_item_2
@@ -52,7 +53,7 @@ class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         }
 
 
-    private inner class TravelAdapter constructor(context: Context, val travels: ArrayList<TravelInfo>) : ArrayAdapter<TravelInfo>(context, ADAPTER_RESOURCE, travels) {
+    private inner class TravelAdapter constructor(context: Context, var travels: ArrayList<TravelInfo>) : ArrayAdapter<TravelInfo>(context, ADAPTER_RESOURCE, travels) {
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
 
@@ -100,21 +101,27 @@ class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         list.onItemClickListener = this
         registerForContextMenu(list)
 
-        //Creamos el adapter y lo asociamos a la lista de la actividad
-        adapter = TravelAdapter(this, data)
+        adapter = if(savedInstanceState == null) {
+            // Creamos el adapter y lo asociamos a la lista de la actividad
+            TravelAdapter(this, data)
+        }
+        else {
+            // O bien lo reiniciamos con el estado guardado
+            TravelAdapter(this, savedInstanceState.getParcelableArrayList<TravelInfo>(KEY_DATA) as ArrayList<TravelInfo>)
+        }
+
         list.adapter = adapter
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
 
-        //outState.putParcelableArrayList("",adapter?.travels?)
+        outState?.putParcelableArrayList(KEY_DATA,adapter?.travels)
     }
 
     override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
 
         viewItem(position)
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
