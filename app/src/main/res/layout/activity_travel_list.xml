@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".TravelListActivity"
-    tools:menu="@menu/activity_travel_list">
+    tools:menu="@menu/options_travel_list">
 
     <ListView
         android:id="@+id/lstInfo"

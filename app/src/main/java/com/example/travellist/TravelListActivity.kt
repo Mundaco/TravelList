@@ -22,6 +22,13 @@ class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
 
     private var adapter: TravelAdapter? = null
 
+    companion object {
+
+        private const val RC_NEW = 1
+        private const val RC_EDIT = 2
+        private const val ADAPTER_RESOURCE = android.R.layout.simple_list_item_2
+    }
+
     //Generamos datos a mostrar
     //En una aplicacion funcional se tomarian de base de datos o algun otro medio
     private val data: ArrayList<TravelInfo>
@@ -99,35 +106,13 @@ class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
 
     override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
 
-        // Obtenemos los datos del viaje seleccionado
-        val info = adapter?.getItem(position)
-
-        // Creamos el intent para mostrar la nueva actividad
-        val intent = Intent(this, TravelActivity::class.java)
-
-        // Añadimos al intent los datos del viaje
-        intent.putExtra(KEY_INFO, info?.toBundle())
-
-        // Lanzamos la nueva actividad
-        startActivity(intent)
+        viewItem(position)
 
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.activity_travel_list, menu)
+        menuInflater.inflate(R.menu.options_travel_list, menu)
         return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        if (item.itemId == R.id.menu_new_travel) {
-            // Lanzamos la actividad para añadir un nuevo viaje
-            val intent = Intent(this, TravelEditActivity::class.java)
-            startActivityForResult(intent, RC_NEW)
-
-        }
-
-        return super.onOptionsItemSelected(item)
     }
 
     override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
@@ -135,34 +120,64 @@ class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         super.onCreateContextMenu(menu, v, menuInfo)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+            R.id.menu_new_travel -> newItem()
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onContextItemSelected(item: MenuItem?): Boolean {
 
         val position = (item?.menuInfo as AdapterView.AdapterContextMenuInfo).position
 
         when(item.itemId) {
-            R.id.btnEdit -> {
-
-                // Obtenemos los datos del viaje seleccionado
-                val info = adapter?.getItem(position)
-
-                // Creamos el intent para mostrar la nueva actividad
-                val intent = Intent(this, TravelEditActivity::class.java)
-
-                // Añadimos al intent los datos del viaje
-                intent.putExtra(KEY_POSITION, position)
-                intent.putExtra(KEY_INFO, info?.toBundle())
-                startActivityForResult(intent, RC_EDIT)
-            }
-            R.id.btnDelete -> {
-
-                adapter?.travels?.removeAt(position)
-                adapter?.notifyDataSetChanged()
-
-            }
+            R.id.btnEdit -> editItem(position)
+            R.id.btnDelete -> deleteItem(position)
         }
 
-
         return super.onContextItemSelected(item)
+    }
+
+    private fun viewItem(position: Int) {
+
+        // Creamos el intent para mostrar la nueva actividad
+        val intent = Intent(this, TravelActivity::class.java)
+
+        // Añadimos al intent los datos del viaje
+        intent.putExtra(KEY_INFO, adapter?.getItem(position)?.toBundle())
+
+        // Lanzamos la nueva actividad
+        startActivity(intent)
+    }
+
+    private fun newItem() {
+
+        // Lanzamos la actividad para añadir un nuevo viaje
+        val intent = Intent(this, TravelEditActivity::class.java)
+        startActivityForResult(intent, RC_NEW)
+    }
+
+    private fun editItem(position: Int) {
+
+        // Obtenemos los datos del viaje seleccionado
+        val info = adapter?.getItem(position)
+
+        // Creamos el intent para mostrar la nueva actividad
+        val intent = Intent(this, TravelEditActivity::class.java)
+
+        // Añadimos al intent los datos del viaje
+        intent.putExtra(KEY_POSITION, position)
+        intent.putExtra(KEY_INFO, info?.toBundle())
+        startActivityForResult(intent, RC_EDIT)
+    }
+
+    private fun deleteItem(position: Int) {
+
+        adapter?.travels?.removeAt(position)
+        adapter?.notifyDataSetChanged()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -182,12 +197,5 @@ class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
             }
         }
 
-    }
-
-    companion object {
-
-        private const val RC_NEW = 1
-        private const val RC_EDIT = 2
-        private const val ADAPTER_RESOURCE = android.R.layout.simple_list_item_2
     }
 }

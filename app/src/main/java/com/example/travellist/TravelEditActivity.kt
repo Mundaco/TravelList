@@ -28,7 +28,7 @@ class TravelEditActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.activity_travel_edit, menu)
+        menuInflater.inflate(R.menu.options_travel_edit, menu)
         return super.onCreateOptionsMenu(menu)
     }
 

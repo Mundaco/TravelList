@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".TravelEditActivity"
-    tools:menu="@menu/activity_travel_edit">
+    tools:menu="@menu/options_travel_edit">
 
     <TextView
         android:id="@+id/lblCity"
