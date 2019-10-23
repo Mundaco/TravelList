@@ -42,7 +42,7 @@ class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener,
         }
 
 
-    private inner class TravelAdapter constructor(context: Context, val travels: ArrayList<TravelInfo>) : ArrayAdapter<TravelInfo>(context, RESOURCE, travels) {
+    private inner class TravelAdapter constructor(context: Context, val travels: ArrayList<TravelInfo>) : ArrayAdapter<TravelInfo>(context, ADAPTER_RESOURCE, travels) {
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
 
@@ -53,7 +53,7 @@ class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener,
                 view = LinearLayout(context)
 
                 val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-                inflater.inflate(RESOURCE, view, true)
+                inflater.inflate(ADAPTER_RESOURCE, view, true)
 
                 holder = ViewHolder()
                 holder.text1 = view.findViewById(android.R.id.text1)
@@ -173,6 +173,6 @@ class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener,
 
         private const val RC_NEW = 1
         private const val RC_EDIT = 2
-        private const val RESOURCE = android.R.layout.simple_list_item_2
+        private const val ADAPTER_RESOURCE = android.R.layout.simple_list_item_2
     }
 }
