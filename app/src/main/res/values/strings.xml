@@ -7,8 +7,7 @@
     <string name="menu_edit_save">Save</string>
 
     <string name="location_string" translatable="false">%1$s (%2$s)</string>
-    <string name="year_string">Year: %1$s"</string>
-    <string name="year_string_na">n/a</string>
+    <string name="NA">n/a</string>
 
     <string name="City">City</string>
     <string name="Country">Country</string>

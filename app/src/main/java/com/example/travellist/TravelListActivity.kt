@@ -70,9 +70,9 @@ class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener,
             val info = travels[position]
             holder.text1!!.text = getString(R.string.location_string, info.city, info.country)
             holder.text2!!.text = if (info.year > 0)
-                getString(R.string.year_string, info.year.toString())
+                "${getString(R.string.Year)}: ${info.year}"
             else
-                getString(R.string.year_string_na)
+                "${getString(R.string.Year)}: ${getString(R.string.NA)}"
 
             return view
         }
@@ -98,6 +98,8 @@ class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener,
         adapter = TravelAdapter(this, values)
         list.adapter = adapter
     }
+
+    // TODO: Save state
 
     override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
 

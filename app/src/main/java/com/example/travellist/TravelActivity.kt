@@ -14,9 +14,10 @@ class TravelActivity : AppCompatActivity() {
         val info = TravelInfo.fromBundle(intent.getBundleExtra("Info"))
 
         txtLocation.text  = getString(R.string.location_string, info.city, info.country)
-        txtYear.text  =
-                if(info.year > 0) getString(R.string.year_string, info.year.toString())
-                else getString(R.string.year_string_na)
+        txtYear.text  = if (info.year > 0)
+            "${getString(R.string.Year)}: ${info.year}"
+        else
+            "${getString(R.string.Year)}: ${getString(R.string.NA)}"
         txtNote.text  = info.note
     }
 

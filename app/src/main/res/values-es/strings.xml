@@ -7,6 +7,5 @@
     <string name="Country">País</string>
     <string name="menu_edit_save">Guardar</string>
     <string name="menu_new_travel">Nuevo</string>
-    <string name="year_string_na">n/d</string>
-    <string name="year_string">Año: %1$s</string>
+    <string name="NA">n/d</string>
 </resources>
