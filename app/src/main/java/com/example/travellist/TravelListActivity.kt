@@ -18,7 +18,7 @@ import com.example.travellist.TravelInfo.Companion.KEY_POSITION
  * forma correcta en la vista.
  *
  */
-class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
+class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
 
     private var adapter: TravelAdapter? = null
 
@@ -69,8 +69,8 @@ class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener,
 
             //Rellenamos la vista con los datos
             val info = travels[position]
-            holder.text1!!.text = getString(R.string.location_string, info.city, info.country)
-            holder.text2!!.text = if (info.year > 0)
+            holder.text1?.text = getString(R.string.location_string, info.city, info.country)
+            holder.text2?.text = if (info.year > 0)
                 "${getString(R.string.Year)}: ${info.year}"
             else
                 "${getString(R.string.Year)}: ${getString(R.string.NA)}"
@@ -90,7 +90,7 @@ class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener,
 
         val list = findViewById<ListView>(R.id.lstInfo)
         list.onItemClickListener = this
-        list.onItemLongClickListener = this
+        registerForContextMenu(list)
 
         //Creamos el adapter y lo asociamos a la lista de la actividad
         adapter = TravelAdapter(this, data)
@@ -100,35 +100,17 @@ class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener,
     override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
 
         // Obtenemos los datos del viaje seleccionado
-        val info = adapter!!.getItem(position)
+        val info = adapter?.getItem(position)
 
         // Creamos el intent para mostrar la nueva actividad
         val intent = Intent(this, TravelActivity::class.java)
 
         // Añadimos al intent los datos del viaje
-        assert(info != null)
-        intent.putExtra(KEY_INFO, info!!.toBundle())
+        intent.putExtra(KEY_INFO, info?.toBundle())
 
         // Lanzamos la nueva actividad
         startActivity(intent)
 
-    }
-
-    override fun onItemLongClick(parent: AdapterView<*>, view: View, position: Int, id: Long): Boolean {
-
-        // Obtenemos los datos del viaje seleccionado
-        val info = adapter!!.getItem(position)
-
-        // Creamos el intent para mostrar la nueva actividad
-        val intent = Intent(this, TravelEditActivity::class.java)
-
-        // Añadimos al intent los datos del viaje
-        assert(info != null)
-        intent.putExtra(KEY_POSITION, position)
-        intent.putExtra(KEY_INFO, info!!.toBundle())
-        startActivityForResult(intent, RC_EDIT)
-
-        return false
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -148,24 +130,55 @@ class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener,
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
+        menuInflater.inflate(R.menu.context_travel_list, menu)
+        super.onCreateContextMenu(menu, v, menuInfo)
+    }
+
+    override fun onContextItemSelected(item: MenuItem?): Boolean {
+
+        val position = (item?.menuInfo as AdapterView.AdapterContextMenuInfo).position
+
+        when(item.itemId) {
+            R.id.btnEdit -> {
+
+                // Obtenemos los datos del viaje seleccionado
+                val info = adapter?.getItem(position)
+
+                // Creamos el intent para mostrar la nueva actividad
+                val intent = Intent(this, TravelEditActivity::class.java)
+
+                // Añadimos al intent los datos del viaje
+                intent.putExtra(KEY_POSITION, position)
+                intent.putExtra(KEY_INFO, info?.toBundle())
+                startActivityForResult(intent, RC_EDIT)
+            }
+            R.id.btnDelete -> {
+
+                adapter?.travels?.removeAt(position)
+                adapter?.notifyDataSetChanged()
+
+            }
+        }
+
+
+        return super.onContextItemSelected(item)
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         when (requestCode) {
             RC_NEW -> if (resultCode == Activity.RESULT_OK) {
-                adapter!!.travels.add(TravelInfo.fromBundle(data!!.getBundleExtra(KEY_INFO)))
-                adapter!!.notifyDataSetChanged()
+                adapter?.travels?.add(TravelInfo.fromBundle(data!!.getBundleExtra(KEY_INFO)))
+                adapter?.notifyDataSetChanged()
             }
             RC_EDIT -> if (resultCode == Activity.RESULT_OK) {
-
                 val position = data!!.getIntExtra(KEY_POSITION, -1)
                 if (position >= 0) {
-                    adapter!!.travels[position] = TravelInfo.fromBundle(data.getBundleExtra(KEY_INFO))
-                    adapter!!.notifyDataSetChanged()
+                    adapter?.travels?.set(position, TravelInfo.fromBundle(data.getBundleExtra(KEY_INFO)))
+                    adapter?.notifyDataSetChanged()
                 }
-            }
-            else -> {
             }
         }
 

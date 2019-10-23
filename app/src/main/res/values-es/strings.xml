@@ -8,4 +8,6 @@
     <string name="menu_edit_save">Guardar</string>
     <string name="menu_new_travel">Nuevo</string>
     <string name="NA">n/d</string>
+    <string name="Edit">Editar</string>
+    <string name="Delete">Eliminar</string>
 </resources>

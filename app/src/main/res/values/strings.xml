@@ -13,5 +13,7 @@
     <string name="Country">Country</string>
     <string name="Year">Year</string>
     <string name="Note">Note</string>
+    <string name="Edit">Edit</string>
+    <string name="Delete">Delete</string>
 
 </resources>
