@@ -19,7 +19,7 @@ class TravelEditActivity : AppCompatActivity() {
         setContentView(R.layout.activity_travel_edit)
 
         if(intent.hasExtra(KEY_POSITION)) {
-            val info= TravelInfo.fromBundle(intent.getBundleExtra(KEY_INFO))
+            val info= intent.getBundleExtra(KEY_INFO).toTravelInfo()
             txtCity.setText(info.city)
             txtCountry.setText(info.country)
             txtYear.setText("${info.year}")

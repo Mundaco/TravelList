@@ -105,6 +105,12 @@ class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         list.adapter = adapter
     }
 
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+
+        //outState.putParcelableArrayList("",adapter?.travels?)
+    }
+
     override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
 
         viewItem(position)
@@ -202,13 +208,13 @@ class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
 
         when (requestCode) {
             RC_NEW -> if (resultCode == Activity.RESULT_OK) {
-                adapter?.travels?.add(TravelInfo.fromBundle(data!!.getBundleExtra(KEY_INFO)))
+                adapter?.travels?.add(data!!.getBundleExtra(KEY_INFO).toTravelInfo())
                 adapter?.notifyDataSetChanged()
             }
             RC_EDIT -> if (resultCode == Activity.RESULT_OK) {
                 val position = data!!.getIntExtra(KEY_POSITION, -1)
                 if (position >= 0) {
-                    adapter?.travels?.set(position, TravelInfo.fromBundle(data.getBundleExtra(KEY_INFO)))
+                    adapter?.travels?.set(position, data.getBundleExtra(KEY_INFO).toTravelInfo())
                     adapter?.notifyDataSetChanged()
                 }
             }

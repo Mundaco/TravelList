@@ -8,7 +8,7 @@ import android.os.Bundle
  *
  *
  */
-class TravelInfo @JvmOverloads constructor(var city: String?, var country: String?, var year: Int, var note: String? = null) {
+data class TravelInfo(var city: String?, var country: String?, var year: Int, var note: String? = null) {
 
     constructor(info: Bundle) : this(
             info.getString(KEY_CITY),
@@ -34,10 +34,10 @@ class TravelInfo @JvmOverloads constructor(var city: String?, var country: Strin
         const val KEY_YEAR = "Year"
         const val KEY_NOTE = "Note"
 
-        fun fromBundle(bundle: Bundle): TravelInfo {
-            return TravelInfo(bundle)
-        }
+
     }
+}
 
-
+fun Bundle.toTravelInfo(): TravelInfo {
+    return TravelInfo(this)
 }
