@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.*
 import android.widget.*
-import java.util.*
 
 /**
  * Este ejemplo muestra el uso de una clase ListActivity que muestra una lista de paises visitados.
@@ -88,18 +87,13 @@ class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener,
         setContentView(R.layout.activity_travel_list)
 
         val list = findViewById<ListView>(R.id.lstInfo)
-        list.setOnItemClickListener(this)
-        list.setOnItemLongClickListener(this)
-
-        //Generamos los datos
-        val values = data
+        list.onItemClickListener = this
+        list.onItemLongClickListener = this
 
         //Creamos el adapter y lo asociamos a la lista de la actividad
-        adapter = TravelAdapter(this, values)
+        adapter = TravelAdapter(this, data)
         list.adapter = adapter
     }
-
-    // TODO: Save state
 
     override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
 
@@ -177,8 +171,8 @@ class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener,
 
     companion object {
 
-        private val RC_NEW = 1
-        private val RC_EDIT = 2
-        private val RESOURCE = android.R.layout.simple_list_item_2
+        private const val RC_NEW = 1
+        private const val RC_EDIT = 2
+        private const val RESOURCE = android.R.layout.simple_list_item_2
     }
 }
