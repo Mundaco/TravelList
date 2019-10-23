@@ -11,15 +11,11 @@ import kotlinx.android.parcel.Parcelize
  *
  */
 
+// TravelInfo es "parcelable" de manera que se puede añadir a un Bundle
 @Parcelize
 data class TravelInfo(var city: String?, var country: String?, var year: Int, var note: String? = null) : Parcelable {
 
-    constructor(info: Bundle) : this(
-            info.getString(KEY_CITY),
-            info.getString(KEY_COUNTRY),
-            info.getInt(KEY_YEAR),
-            info.getString(KEY_NOTE))
-
+    // Funcion para devolver los datos en forma de Bundle
     fun toBundle(): Bundle {
         val info = Bundle()
         info.putString(KEY_CITY, this.city)
@@ -40,6 +36,12 @@ data class TravelInfo(var city: String?, var country: String?, var year: Int, va
     }
 }
 
+// Extensión del objeto Bundle para convertirlo a TravelInfo
 fun Bundle.toTravelInfo(): TravelInfo {
-    return TravelInfo(this)
+    return TravelInfo(
+            this.getString(TravelInfo.KEY_CITY),
+            this.getString(TravelInfo.KEY_COUNTRY),
+            this.getInt(TravelInfo.KEY_YEAR),
+            this.getString(TravelInfo.KEY_NOTE)
+    )
 }

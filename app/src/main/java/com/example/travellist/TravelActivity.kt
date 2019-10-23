@@ -11,9 +11,10 @@ class TravelActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_travel)
 
-        // Mostramos los datos pasados en el intent en cada control
+        // Obtenemos los datos del intent
         val info = intent.getBundleExtra(KEY_INFO).toTravelInfo()
 
+        // Mostramos los datos en cada control
         txtLocation.text  = getString(R.string.location_string, info.city, info.country)
         txtYear.text  = if (info.year > 0)
             "${getString(R.string.Year)}: ${info.year}"

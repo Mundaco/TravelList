@@ -21,18 +21,10 @@ import com.example.travellist.TravelInfo.Companion.KEY_POSITION
  */
 class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
 
+    /** Variables */
     private var adapter: TravelAdapter? = null
 
-    companion object {
-
-        private const val KEY_DATA = "Data"
-        private const val RC_NEW = 1
-        private const val RC_EDIT = 2
-        private const val ADAPTER_RESOURCE = android.R.layout.simple_list_item_2
-    }
-
-    //Generamos datos a mostrar
-    //En una aplicacion funcional se tomarian de base de datos o algun otro medio
+    /** Datos */
     private val data: ArrayList<TravelInfo>
         get() {
             val travels = ArrayList<TravelInfo>()
@@ -52,8 +44,8 @@ class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
             return travels
         }
 
-
-    private inner class TravelAdapter constructor(context: Context, var travels: ArrayList<TravelInfo>) : ArrayAdapter<TravelInfo>(context, ADAPTER_RESOURCE, travels) {
+    /** Clase adaptador para la lista */
+    private inner class TravelAdapter constructor(context: Context, var travels: ArrayList<TravelInfo>) : ArrayAdapter<TravelInfo>(context, LIST_ITEM_RESOURCE, travels) {
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
 
@@ -64,7 +56,7 @@ class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
                 view = LinearLayout(context)
 
                 val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-                inflater.inflate(ADAPTER_RESOURCE, view, true)
+                inflater.inflate(LIST_ITEM_RESOURCE, view, true)
 
                 holder = ViewHolder()
                 holder.text1 = view.findViewById(android.R.id.text1)
@@ -93,6 +85,7 @@ class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         var text2: TextView? = null
     }
 
+    /** Ciclo de vida */
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_travel_list)
@@ -100,6 +93,7 @@ class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         val list = findViewById<ListView>(R.id.lstInfo)
         list.onItemClickListener = this
         registerForContextMenu(list)
+
 
         adapter = if(savedInstanceState == null) {
             // Creamos el adapter y lo asociamos a la lista de la actividad
@@ -113,14 +107,16 @@ class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         list.adapter = adapter
     }
 
+
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
 
+        // Guardamos el estado de la lista ("travels")
         outState?.putParcelableArrayList(KEY_DATA,adapter?.travels)
     }
 
+    /** Manjador de eventos de interfaz */
     override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-
         viewItem(position)
     }
 
@@ -145,6 +141,7 @@ class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
 
     override fun onContextItemSelected(item: MenuItem?): Boolean {
 
+        // Obtenemos la posicion en la lista del elemento que vamos a editar o eliminar
         val position = (item?.menuInfo as AdapterView.AdapterContextMenuInfo).position
 
         when(item.itemId) {
@@ -155,6 +152,7 @@ class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         return super.onContextItemSelected(item)
     }
 
+    /** Lógica de negocio */
     private fun viewItem(position: Int) {
 
         // Creamos el intent para mostrar la nueva actividad
@@ -182,14 +180,17 @@ class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         // Creamos el intent para mostrar la nueva actividad
         val intent = Intent(this, TravelEditActivity::class.java)
 
-        // Añadimos al intent los datos del viaje
+        // Añadimos al intent la posición del viaje en la lista...
         intent.putExtra(KEY_POSITION, position)
+        // ...y los datos del viaje
         intent.putExtra(KEY_INFO, info?.toBundle())
+
         startActivityForResult(intent, RC_EDIT)
     }
 
     private fun deleteItem(position: Int) {
 
+        // Definimos un diálogo para obtener la confirmación del usuario (antes de eliminar)
         val builder = AlertDialog.Builder(this)
         builder.setTitle(getString(R.string.Delete))
         builder.setMessage(getString(R.string.delete_item_question))
@@ -203,29 +204,49 @@ class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         }
 
         builder.setNegativeButton(getString(R.string.No)){ _, _ ->
+
+            // No eliminamos el elemento
             Toast.makeText(this,getString(R.string.delete_item_cancelled),Toast.LENGTH_SHORT).show()
         }
 
+        // Creamos y mostramos el diálogo de confirmación
         val dialog: AlertDialog = builder.create()
         dialog.show()
     }
 
+    /** Manejador de resultados de actividades */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         when (requestCode) {
+            // Si venimos de crear un nuevo elemento...
             RC_NEW -> if (resultCode == Activity.RESULT_OK) {
+                // ...lo añadimos a la lista
                 adapter?.travels?.add(data!!.getBundleExtra(KEY_INFO).toTravelInfo())
                 adapter?.notifyDataSetChanged()
             }
+            // ...si no, si venimos de editar un elemento...
             RC_EDIT -> if (resultCode == Activity.RESULT_OK) {
+                // ...recuperamos su posicion en la lista...
                 val position = data!!.getIntExtra(KEY_POSITION, -1)
                 if (position >= 0) {
+                    // ...y lo modificamos directamente
                     adapter?.travels?.set(position, data.getBundleExtra(KEY_INFO).toTravelInfo())
                     adapter?.notifyDataSetChanged()
                 }
             }
         }
 
+    }
+
+    /** Constantes estáticas */
+    companion object {
+
+        private const val KEY_DATA = "Data"
+        private const val RC_NEW = 1
+        private const val RC_EDIT = 2
+
+
+        private const val LIST_ITEM_RESOURCE = android.R.layout.simple_list_item_2
     }
 }

@@ -18,8 +18,13 @@ class TravelEditActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_travel_edit)
 
+        // Si el intent contiene datos de un viaje, estamos editándolo
         if(intent.hasExtra(KEY_POSITION)) {
+
+            // Obtenemos los datos del intent
             val info= intent.getBundleExtra(KEY_INFO).toTravelInfo()
+
+            // Mostramos los datos en los cuandros de texto
             txtCity.setText(info.city)
             txtCountry.setText(info.country)
             txtYear.setText("${info.year}")
@@ -34,11 +39,17 @@ class TravelEditActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-
+        // Si la opcion elejida es "Guardar"
         if(item.itemId == R.id.btnSave) {
 
+            // Creamos un nuevo intent ("data") para devolver los datos
             val data = Intent()
+
+            // Añadimos la posición del viaje en la lista obtenida del intent llamador
+            // (-1 en caso de ser un uevo viaje)
             data.putExtra(KEY_POSITION, intent.getIntExtra(KEY_POSITION, -1))
+
+            // Creamos un TravelInfo con la informacion del usuario para este viaje y lo añadimos a "data"
             val info = TravelInfo(
                     "${txtCity.text}",
                     "${txtCountry.text}",
@@ -47,6 +58,7 @@ class TravelEditActivity : AppCompatActivity() {
             )
             data.putExtra(KEY_INFO, info.toBundle())
 
+            // Devolvemos el foco a la Activity llamadora
             setResult(Activity.RESULT_OK,data)
             finish()
         }
