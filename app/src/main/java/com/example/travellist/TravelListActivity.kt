@@ -137,7 +137,7 @@ class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
-            R.id.menu_new_travel -> newItem()
+            R.id.btnNew -> newItem()
         }
 
         return super.onOptionsItemSelected(item)

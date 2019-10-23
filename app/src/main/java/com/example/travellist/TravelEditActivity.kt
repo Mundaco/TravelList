@@ -35,7 +35,7 @@ class TravelEditActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
 
-        if(item.itemId == R.id.menu_save) {
+        if(item.itemId == R.id.btnSave) {
 
             val data = Intent()
             data.putExtra(KEY_POSITION, intent.getIntExtra(KEY_POSITION, -1))
