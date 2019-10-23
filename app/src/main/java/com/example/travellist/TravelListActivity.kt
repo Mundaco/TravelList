@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.*
 import android.widget.*
+import com.example.travellist.TravelInfo.Companion.KEY_INFO
+import com.example.travellist.TravelInfo.Companion.KEY_POSITION
 
 /**
  * Este ejemplo muestra el uso de una clase ListActivity que muestra una lista de paises visitados.
@@ -105,7 +107,7 @@ class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener,
 
         // Añadimos al intent los datos del viaje
         assert(info != null)
-        intent.putExtra("Info", info!!.toBundle())
+        intent.putExtra(KEY_INFO, info!!.toBundle())
 
         // Lanzamos la nueva actividad
         startActivity(intent)
@@ -122,8 +124,8 @@ class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener,
 
         // Añadimos al intent los datos del viaje
         assert(info != null)
-        intent.putExtra("Position", position)
-        intent.putExtra("Info", info!!.toBundle())
+        intent.putExtra(KEY_POSITION, position)
+        intent.putExtra(KEY_INFO, info!!.toBundle())
         startActivityForResult(intent, RC_EDIT)
 
         return false
@@ -152,14 +154,14 @@ class TravelListActivity : AppCompatActivity(), AdapterView.OnItemClickListener,
 
         when (requestCode) {
             RC_NEW -> if (resultCode == Activity.RESULT_OK) {
-                adapter!!.travels.add(TravelInfo.fromBundle(data!!.getBundleExtra("Info")))
+                adapter!!.travels.add(TravelInfo.fromBundle(data!!.getBundleExtra(KEY_INFO)))
                 adapter!!.notifyDataSetChanged()
             }
             RC_EDIT -> if (resultCode == Activity.RESULT_OK) {
 
-                val position = data!!.getIntExtra("Position", -1)
+                val position = data!!.getIntExtra(KEY_POSITION, -1)
                 if (position >= 0) {
-                    adapter!!.travels[position] = TravelInfo.fromBundle(data.getBundleExtra("Info"))
+                    adapter!!.travels[position] = TravelInfo.fromBundle(data.getBundleExtra(KEY_INFO))
                     adapter!!.notifyDataSetChanged()
                 }
             }

@@ -11,21 +11,28 @@ import android.os.Bundle
 class TravelInfo @JvmOverloads constructor(var city: String?, var country: String?, var year: Int, var note: String? = null) {
 
     constructor(info: Bundle) : this(
-            info.getString("City"),
-            info.getString("Country"),
-            info.getInt("Year"),
-            info.getString("Note"))
+            info.getString(KEY_CITY),
+            info.getString(KEY_COUNTRY),
+            info.getInt(KEY_YEAR),
+            info.getString(KEY_NOTE))
 
     fun toBundle(): Bundle {
         val info = Bundle()
-        info.putString("City", this.city)
-        info.putString("Country", this.country)
-        info.putInt("Year", this.year)
-        info.putString("Note", this.note)
+        info.putString(KEY_CITY, this.city)
+        info.putString(KEY_COUNTRY, this.country)
+        info.putInt(KEY_YEAR, this.year)
+        info.putString(KEY_NOTE, this.note)
         return info
     }
 
     companion object {
+
+        const val KEY_INFO = "Info"
+        const val KEY_POSITION = "Position"
+        const val KEY_CITY = "City"
+        const val KEY_COUNTRY = "Country"
+        const val KEY_YEAR = "Year"
+        const val KEY_NOTE = "Note"
 
         fun fromBundle(bundle: Bundle): TravelInfo {
             return TravelInfo(bundle)
